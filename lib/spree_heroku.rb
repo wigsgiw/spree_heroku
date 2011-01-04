@@ -16,14 +16,6 @@ module SpreeHeroku
 
       ActionController::Base.perform_caching = false if RAILS_ENV == 'production'
 
-      aws_s3_file = File.join(Rails.root, 'config', 'aws_s3.yml')
-
-      if File.exists?(aws_s3_file)
-        HEROKU_AWS_S3 = YAML.load_file(aws_s3_file)[Rails.env]
-      else
-        HEROKU_AWS_S3 = {}
-      end
-
       Spree::FileUtilz.class_eval do
         class << self
           # Patch mirror_files method to be silent when using r/o Heroku FS
